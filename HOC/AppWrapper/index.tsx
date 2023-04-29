@@ -1,9 +1,13 @@
 import { Box, CircularProgress } from '@mui/material';
 import { useSession } from 'next-auth/react';
-import React, { useEffect } from 'react';
+import { Router, useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 
 const AppWrapper = ({ children }: IProps) => {
     const { data: session, status } = useSession();
+    const { events } = useRouter();
+
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         console.log('--------------------------------------------');
@@ -14,7 +18,36 @@ const AppWrapper = ({ children }: IProps) => {
         console.log('--------------------------------------------');
     }, [session]);
 
-    if (status === 'loading') {
+    useEffect(() => {
+        let startTimer: NodeJS.Timeout | null = null;
+
+        const start = () => {
+            startTimer = setTimeout(() => {
+                setLoading(true);
+            }, 100);
+        };
+        const end = () => {
+            if (startTimer) {
+                clearTimeout(startTimer);
+            }
+            setLoading(false);
+        };
+
+        events.on('routeChangeStart', start);
+        events.on('routeChangeComplete', end);
+        events.on('routeChangeError', end);
+
+        return () => {
+            events.off('routeChangeStart', start);
+            events.off('routeChangeComplete', end);
+            events.off('routeChangeError', end);
+            if (startTimer) {
+                clearTimeout(startTimer);
+            }
+        };
+    }, [events]);
+
+    if (status === 'loading' || loading) {
         return <PageLoader />;
     }
 

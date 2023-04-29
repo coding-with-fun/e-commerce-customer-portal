@@ -13,6 +13,7 @@ import { toFormikValidationSchema } from 'zod-formik-adapter';
 import schema from './schema';
 import { useRouter } from 'next/router';
 import unauthenticatedPage from '@/hooks/unauthenticatedPage';
+import env from '@/utility/env';
 
 const SignIn = () => {
     const {
@@ -32,7 +33,7 @@ const SignIn = () => {
             await signIn('credentials', {
                 email: values.email,
                 password: values.password,
-                callbackUrl: (callbackUrl as string) || 'http://localhost:3000',
+                callbackUrl: (callbackUrl as string) || env.baseURL,
             });
         },
     });
