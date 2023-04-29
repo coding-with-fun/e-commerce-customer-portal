@@ -11,11 +11,11 @@ import '@/styles/globals.css';
 
 const clientSideEmotionCache = createEmotionCache();
 
-export default function App({
+const App = ({
     Component,
     emotionCache = clientSideEmotionCache,
     pageProps: { session, ...pageProps },
-}: CustomAppProps) {
+}: CustomAppProps) => {
     return (
         <CacheProvider value={emotionCache}>
             <ThemeProvider theme={theme}>
@@ -29,7 +29,9 @@ export default function App({
             </ThemeProvider>
         </CacheProvider>
     );
-}
+};
+
+export default App;
 
 export interface CustomAppProps
     extends AppProps<{

@@ -21,10 +21,8 @@ export const authOptions: NextAuthOptions = {
     },
     pages: {
         signIn: '/auth/signin',
-        signOut: '/auth/signout',
-        error: '/auth/error',
-        verifyRequest: '/auth/verify-request',
-        newUser: '/auth/new-user',
+        signOut: '/',
+        error: '/',
     },
     debug: true,
     callbacks: {

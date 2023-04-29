@@ -9,7 +9,7 @@ import Document, {
 
 import createEmotionCache from '@/utility/createEmotionCache';
 
-export default function CustomDocument() {
+const CustomDocument = () => {
     return (
         <Html lang="en">
             <Head>
@@ -22,7 +22,9 @@ export default function CustomDocument() {
             </body>
         </Html>
     );
-}
+};
+
+export default CustomDocument;
 
 // `getInitialProps` belongs to `_document` (instead of `_app`),
 // it's compatible with static-site generation (SSG).
