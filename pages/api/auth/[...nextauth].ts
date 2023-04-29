@@ -19,10 +19,27 @@ export const authOptions: NextAuthOptions = {
     session: {
         strategy: 'jwt',
     },
+    pages: {
+        signIn: '/auth/signin',
+        signOut: '/auth/signout',
+        error: '/auth/error',
+        verifyRequest: '/auth/verify-request',
+        newUser: '/auth/new-user',
+    },
     debug: true,
     callbacks: {
-        async jwt({ token, user }) {
-            return { ...token, ...user };
+        async jwt({ token, user, session, trigger }) {
+            if (trigger === 'update' && session) {
+                return {
+                    ...token,
+                    ...session.user,
+                };
+            }
+
+            return {
+                ...token,
+                ...user,
+            };
         },
 
         async session({ session, token }) {
