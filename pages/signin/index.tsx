@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/material';
 const SignIn = () => {
     return (
         <Box>
-            <Typography>Home</Typography>
+            <Typography>Sign In</Typography>
         </Box>
     );
 };

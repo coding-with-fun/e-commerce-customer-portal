@@ -1,7 +1,10 @@
 import { Box, Typography } from '@mui/material';
+import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 
 const Navbar = () => {
+    const { status } = useSession();
+
     return (
         <Box className="flex items-center p-4 shadow">
             <Typography component="h1" variant="h6" className="cursor-pointer">
@@ -13,11 +16,24 @@ const Navbar = () => {
             <Box className="flex gap-3">
                 <Link href="/">Home</Link>
 
-                <Link href="/profile">Profile</Link>
+                {status === 'authenticated' ? (
+                    <Link href="/profile">Profile</Link>
+                ) : null}
 
-                <Link href="/signin">Sign In</Link>
+                {status === 'unauthenticated' ? (
+                    <Link href="/signin">Sign In</Link>
+                ) : null}
 
-                <Typography className="cursor-pointer">Sign Out</Typography>
+                {status === 'authenticated' ? (
+                    <Typography
+                        className="cursor-pointer"
+                        onClick={() => {
+                            signOut();
+                        }}
+                    >
+                        Sign Out
+                    </Typography>
+                ) : null}
             </Box>
         </Box>
     );
