@@ -1,10 +1,18 @@
 import { Box, Typography } from '@mui/material';
+import Head from 'next/head';
+import { Fragment } from 'react';
 
 const Profile = () => {
     return (
-        <Box>
-            <Typography>Profile</Typography>
-        </Box>
+        <Fragment>
+            <Head>
+                <title>Profile</title>
+            </Head>
+
+            <Box>
+                <Typography>Profile</Typography>
+            </Box>
+        </Fragment>
     );
 };
 

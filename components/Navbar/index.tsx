@@ -6,7 +6,7 @@ const Navbar = () => {
     const { status } = useSession();
 
     return (
-        <Box className="flex items-center p-4 shadow">
+        <Box className="flex items-center p-4 shadow fixed top-0 w-screen z-50 bg-white">
             <Typography component="h1" variant="h6" className="cursor-pointer">
                 <Link href="/">XMart</Link>
             </Typography>
@@ -21,7 +21,7 @@ const Navbar = () => {
                 ) : null}
 
                 {status === 'unauthenticated' ? (
-                    <Link href="/signin">Sign In</Link>
+                    <Link href="/auth/signin">Sign In</Link>
                 ) : null}
 
                 {status === 'authenticated' ? (

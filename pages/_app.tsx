@@ -27,7 +27,7 @@ const App = ({
                     <AppWrapper>
                         <Navbar />
 
-                        <main className="p-4">
+                        <main className="p-4 pt-20 h-full">
                             <Component {...pageProps} />
                         </main>
                     </AppWrapper>

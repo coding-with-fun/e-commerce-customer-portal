@@ -8,6 +8,8 @@ export const authOptions: NextAuthOptions = {
             name: 'Credentials',
             credentials: {},
             authorize: async (credentials) => {
+                await new Promise((r) => setTimeout(r, 3000));
+
                 return {
                     email: 'dev@harrsh.com',
                     name: 'Harrsh Patel',
