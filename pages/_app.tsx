@@ -1,11 +1,11 @@
-import { SessionProvider } from 'next-auth/react';
-import { CssBaseline, ThemeProvider } from '@mui/material';
-import type { AppProps } from 'next/app';
 import { CacheProvider, type EmotionCache } from '@emotion/react';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import type { Session } from 'next-auth';
+import { SessionProvider } from 'next-auth/react';
+import type { AppProps } from 'next/app';
 
-import createEmotionCache from '@/utility/createEmotionCache';
 import theme from '@/styles/theme';
+import createEmotionCache from '@/utility/createEmotionCache';
 
 import '@/styles/globals.css';
 

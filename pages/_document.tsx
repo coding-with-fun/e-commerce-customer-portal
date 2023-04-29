@@ -1,3 +1,4 @@
+import createEmotionServer from '@emotion/server/create-instance';
 import Document, {
     DocumentContext,
     Head,
@@ -5,10 +6,8 @@ import Document, {
     Main,
     NextScript,
 } from 'next/document';
+
 import createEmotionCache from '@/utility/createEmotionCache';
-import createEmotionServer from '@emotion/server/create-instance';
-import App from 'next/app';
-import React from 'react';
 
 export default function CustomDocument() {
     return (
