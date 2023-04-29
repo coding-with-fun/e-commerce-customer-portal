@@ -11,8 +11,14 @@ import { Fragment, useState } from 'react';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 
 import schema from './schema';
+import { useRouter } from 'next/router';
+import unauthenticatedPage from '@/hooks/unauthenticatedPage';
 
 const SignIn = () => {
+    const {
+        query: { callbackUrl },
+    } = useRouter();
+
     const [isDataSubmitting, setIsDataSubmitting] = useState(false);
 
     const formik = useFormik({
@@ -23,12 +29,10 @@ const SignIn = () => {
         validationSchema: toFormikValidationSchema(schema),
         onSubmit: async (values) => {
             setIsDataSubmitting(true);
-            console.log(values);
-
             await signIn('credentials', {
                 email: values.email,
                 password: values.password,
-                callbackUrl: 'http://localhost:3000',
+                callbackUrl: (callbackUrl as string) || 'http://localhost:3000',
             });
         },
     });
@@ -105,4 +109,4 @@ const SignIn = () => {
     );
 };
 
-export default SignIn;
+export default unauthenticatedPage(SignIn);

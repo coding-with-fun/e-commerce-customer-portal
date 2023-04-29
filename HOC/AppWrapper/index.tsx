@@ -27,7 +27,7 @@ interface IProps {
     children: JSX.Element[] | JSX.Element | null;
 }
 
-const PageLoader = () => {
+export const PageLoader = () => {
     return (
         <Box className="h-screen flex justify-center items-center">
             <CircularProgress />

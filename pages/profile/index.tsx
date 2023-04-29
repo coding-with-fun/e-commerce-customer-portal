@@ -1,3 +1,4 @@
+import authenticatedPage from '@/hooks/authenticatedPage';
 import { Box, Typography } from '@mui/material';
 import Head from 'next/head';
 import { Fragment } from 'react';
@@ -16,4 +17,4 @@ const Profile = () => {
     );
 };
 
-export default Profile;
+export default authenticatedPage(Profile);
