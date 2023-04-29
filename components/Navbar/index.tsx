@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 const Navbar = () => {
     return (
-        <Box className="flex p-4 shadow">
+        <Box className="flex items-center p-4 shadow">
             <Typography component="h1" variant="h6" className="cursor-pointer">
                 <Link href="/">XMart</Link>
             </Typography>
