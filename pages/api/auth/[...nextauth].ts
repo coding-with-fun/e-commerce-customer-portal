@@ -1,3 +1,4 @@
+import env from '@/utility/env';
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
@@ -15,7 +16,7 @@ export const authOptions: NextAuthOptions = {
             },
         }),
     ],
-    secret: 'abcd',
+    secret: env.auth.secret,
     session: {
         strategy: 'jwt',
     },
