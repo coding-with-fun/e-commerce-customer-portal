@@ -4,12 +4,9 @@ import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { Fragment } from 'react';
 import { ProductListResponseType } from './api/product/list';
+import ProductsList from '@/components/home/ProductsList';
 
-const Home = ({ products }: { products: ProductListResponseType }) => {
-    console.log({
-        products: products.products,
-    });
-
+const Home = ({ products: { products } }: IProps) => {
     return (
         <Fragment>
             <Head>
@@ -17,7 +14,7 @@ const Home = ({ products }: { products: ProductListResponseType }) => {
             </Head>
 
             <Box>
-                <Typography>Home</Typography>
+                <ProductsList products={products} />
             </Box>
         </Fragment>
     );
@@ -35,3 +32,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
         },
     };
 };
+
+interface IProps {
+    products: ProductListResponseType;
+}

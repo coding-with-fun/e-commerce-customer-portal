@@ -12,7 +12,6 @@ const handler = async (
     res: NextApiResponse<ProductListResponseType>
 ) => {
     try {
-        await new Promise((r) => setTimeout(r, 3000));
         return response(res, {
             message: 'Products fetched successfully.',
             products: Products,
