@@ -8,6 +8,8 @@ import theme from '@/styles/theme';
 import createEmotionCache from '@/utility/createEmotionCache';
 
 import '@/styles/globals.css';
+import AppWrapper from '@/HOC/AppWrapper';
+import Navbar from '@/components/Navbar';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -22,9 +24,13 @@ const App = ({
                 <CssBaseline />
 
                 <SessionProvider session={session} refetchOnWindowFocus={false}>
-                    <main className="p-3">
-                        <Component {...pageProps} />
-                    </main>
+                    <AppWrapper>
+                        <Navbar />
+
+                        <main className="p-4">
+                            <Component {...pageProps} />
+                        </main>
+                    </AppWrapper>
                 </SessionProvider>
             </ThemeProvider>
         </CacheProvider>
