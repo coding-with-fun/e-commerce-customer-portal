@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from '@mui/material';
-import { useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 
 const Home = () => {
     const { data: session, update } = useSession();
@@ -22,6 +22,15 @@ const Home = () => {
 
             <Button variant="contained" onClick={handleUpdateUser}>
                 Button
+            </Button>
+
+            <Button
+                variant="contained"
+                onClick={() => {
+                    signIn();
+                }}
+            >
+                Sign In
             </Button>
         </Box>
     );

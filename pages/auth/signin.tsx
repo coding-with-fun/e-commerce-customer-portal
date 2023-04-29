@@ -1,21 +1,9 @@
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { getServerSession } from 'next-auth';
-import {
-    getCsrfToken,
-    getProviders,
-    signIn,
-    signOut,
-    useSession,
-} from 'next-auth/react';
-import { authOptions } from '../api/auth/[...nextauth]';
+import { signIn, signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
 
-const SignIn = ({
-    csrfToken,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-    const session = useSession();
+const SignIn = () => {
     const router = useRouter();
 
     const formik = useFormik({
@@ -70,19 +58,3 @@ const SignIn = ({
 };
 
 export default SignIn;
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const session = await getServerSession(
-        context.req,
-        context.res,
-        authOptions
-    );
-    const providers = await getProviders();
-
-    return {
-        props: {
-            providers,
-            csrfToken: await getCsrfToken(context),
-        },
-    };
-};
