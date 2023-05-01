@@ -3,6 +3,7 @@ import { ProductDetailsResponseType } from '@/pages/api/product/detail';
 import env from '@/utility/env';
 import { GetServerSideProps } from 'next';
 import ProductNotFound from './ProductNotFound';
+import ProductDetails from './ProductDetails';
 
 const Product = ({ data: { product, message, success } }: IProps) => {
     if (!success) {
@@ -10,7 +11,7 @@ const Product = ({ data: { product, message, success } }: IProps) => {
         return <ProductNotFound />;
     }
 
-    return <div>{product.name}</div>;
+    return <ProductDetails product={product} />;
 };
 
 export default Product;
