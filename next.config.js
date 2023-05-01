@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: true,
+    reactStrictMode: false,
     images: {
         remotePatterns: [
             {
@@ -14,6 +14,15 @@ const nextConfig = {
                 port: '',
             },
         ],
+    },
+    async redirects() {
+        return [
+            {
+                source: '/product',
+                destination: '/',
+                permanent: true,
+            },
+        ];
     },
 };
 

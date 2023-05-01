@@ -6,7 +6,7 @@ import Head from 'next/head';
 import { Fragment } from 'react';
 import { ProductListResponseType } from './api/product/list';
 
-const Home = ({ products: { products } }: IProps) => {
+const Home = ({ data: { products } }: IProps) => {
     return (
         <Fragment>
             <Head>
@@ -23,16 +23,16 @@ const Home = ({ products: { products } }: IProps) => {
 export default Home;
 
 export const getServerSideProps: GetServerSideProps = async () => {
-    const data = await fetch(`${env.baseURL}/api/product/list`);
-    const products: ProductListResponseType = await data.json();
+    const response = await fetch(`${env.baseURL}/api/product/list`);
+    const data: ProductListResponseType = await response.json();
 
     return {
         props: {
-            products,
+            data,
         },
     };
 };
 
 interface IProps {
-    products: ProductListResponseType;
+    data: ProductListResponseType;
 }

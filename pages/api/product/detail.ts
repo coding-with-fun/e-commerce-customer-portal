@@ -3,23 +3,29 @@ import response from '@/libs/response';
 import Product, { IProductSchema } from '@/schemas/product.schema';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-export interface ProductListResponseType {
-    products: IProductSchema[];
+export interface ProductDetailsResponseType {
+    product: IProductSchema;
+    success: boolean;
+    message: string;
     [key: string]: any;
 }
 
 const handler = async (
     req: NextApiRequest,
-    res: NextApiResponse<ProductListResponseType>
+    res: NextApiResponse<ProductDetailsResponseType>
 ) => {
     try {
+        const { id } = req.query;
         await connectMongo();
 
-        const products = await Product.find();
+        const product = await Product.findById(id);
+        if (!product) {
+            throw new Error('Product not found.');
+        }
 
         return response(res, {
-            message: 'Products fetched successfully.',
-            products,
+            message: 'Product fetched successfully.',
+            product,
         });
     } catch (error) {
         return response(res, null, error);
