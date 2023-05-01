@@ -8,6 +8,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 3.5,
         totalRatings: 40,
+        isFavorite: false,
     },
     {
         _id: '1',
@@ -18,6 +19,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 4.2,
         totalRatings: 40,
+        isFavorite: false,
     },
     {
         _id: '2',
@@ -28,6 +30,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 3.5,
         totalRatings: 40,
+        isFavorite: false,
     },
     {
         _id: '3',
@@ -38,6 +41,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 4.2,
         totalRatings: 40,
+        isFavorite: false,
     },
     {
         _id: '4',
@@ -48,6 +52,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 3.5,
         totalRatings: 40,
+        isFavorite: false,
     },
     {
         _id: '5',
@@ -58,6 +63,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 4.2,
         totalRatings: 40,
+        isFavorite: false,
     },
     {
         _id: '6',
@@ -68,6 +74,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 3.5,
         totalRatings: 40,
+        isFavorite: false,
     },
     {
         _id: '7',
@@ -78,6 +85,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 4.2,
         totalRatings: 40,
+        isFavorite: false,
     },
     {
         _id: '8',
@@ -88,6 +96,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 3.5,
         totalRatings: 40,
+        isFavorite: false,
     },
     {
         _id: '9',
@@ -98,6 +107,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 4.2,
         totalRatings: 40,
+        isFavorite: false,
     },
     {
         _id: '10',
@@ -108,6 +118,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 3.5,
         totalRatings: 40,
+        isFavorite: false,
     },
     {
         _id: '11',
@@ -118,6 +129,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 4.2,
         totalRatings: 40,
+        isFavorite: false,
     },
     {
         _id: '12',
@@ -128,6 +140,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 3.5,
         totalRatings: 40,
+        isFavorite: false,
     },
     {
         _id: '13',
@@ -138,6 +151,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 4.2,
         totalRatings: 40,
+        isFavorite: false,
     },
     {
         _id: '14',
@@ -148,6 +162,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 3.5,
         totalRatings: 40,
+        isFavorite: false,
     },
     {
         _id: '15',
@@ -158,6 +173,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 4.2,
         totalRatings: 40,
+        isFavorite: false,
     },
     {
         _id: '16',
@@ -168,6 +184,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 3.5,
         totalRatings: 40,
+        isFavorite: false,
     },
     {
         _id: '17',
@@ -178,6 +195,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 4.2,
         totalRatings: 40,
+        isFavorite: false,
     },
     {
         _id: '18',
@@ -188,6 +206,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 3.5,
         totalRatings: 40,
+        isFavorite: false,
     },
     {
         _id: '19',
@@ -198,6 +217,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 4.2,
         totalRatings: 40,
+        isFavorite: false,
     },
     {
         _id: '20',
@@ -208,6 +228,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 3.5,
         totalRatings: 40,
+        isFavorite: false,
     },
     {
         _id: '21',
@@ -218,6 +239,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 4.2,
         totalRatings: 40,
+        isFavorite: false,
     },
     {
         _id: '22',
@@ -228,6 +250,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 3.5,
         totalRatings: 40,
+        isFavorite: false,
     },
     {
         _id: '23',
@@ -238,6 +261,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 4.2,
         totalRatings: 40,
+        isFavorite: false,
     },
     {
         _id: '24',
@@ -248,6 +272,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 3.5,
         totalRatings: 40,
+        isFavorite: false,
     },
     {
         _id: '25',
@@ -258,6 +283,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 4.2,
         totalRatings: 40,
+        isFavorite: false,
     },
     {
         _id: '26',
@@ -268,6 +294,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 3.5,
         totalRatings: 40,
+        isFavorite: false,
     },
     {
         _id: '27',
@@ -278,6 +305,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 4.2,
         totalRatings: 40,
+        isFavorite: false,
     },
     {
         _id: '28',
@@ -288,6 +316,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 3.5,
         totalRatings: 40,
+        isFavorite: false,
     },
     {
         _id: '29',
@@ -298,6 +327,7 @@ const Products: IProduct[] = [
         seller: 'Harrsh',
         ratings: 4.2,
         totalRatings: 40,
+        isFavorite: false,
     },
 ];
 
@@ -312,4 +342,5 @@ export interface IProduct {
     seller: string;
     ratings: number;
     totalRatings: number;
+    isFavorite: boolean;
 }

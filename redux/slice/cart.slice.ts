@@ -2,16 +2,18 @@ import { IProduct } from '@/data/ProductsData';
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
-export interface ICart {
+export interface ICartData {
     [_id: string]: IProduct;
 }
 
 export interface IInitialData {
-    cartData: ICart;
+    cartData: ICartData;
+    favoriteProducts: string[];
 }
 
 const initialState: IInitialData = {
     cartData: {},
+    favoriteProducts: [],
 };
 
 const CartSlice = createSlice({
@@ -54,10 +56,25 @@ const CartSlice = createSlice({
                 }
             }
         },
+
+        toggleFavorite: (state, action) => {
+            const { _id } = action.payload;
+
+            const index = state.favoriteProducts.findIndex((value) => {
+                return value === _id;
+            });
+
+            if (index < 0) {
+                state.favoriteProducts.push(_id);
+            } else {
+                state.favoriteProducts.splice(index, 1);
+            }
+        },
     },
 });
 
-export const { addToCart, removeFromCart, updateCart } = CartSlice.actions;
+export const { addToCart, removeFromCart, updateCart, toggleFavorite } =
+    CartSlice.actions;
 
 export const cart = (state: RootState): IInitialData => state.cart;
 

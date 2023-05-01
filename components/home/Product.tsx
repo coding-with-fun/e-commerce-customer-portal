@@ -1,7 +1,14 @@
+import Modal from '@/HOC/Modal';
 import { IProduct } from '@/data/ProductsData';
 import { useAppSelector } from '@/hooks/redux';
-import { addToCart, removeFromCart } from '@/redux/slice/cart.slice';
+import {
+    addToCart,
+    removeFromCart,
+    toggleFavorite,
+} from '@/redux/slice/cart.slice';
 import AddIcon from '@mui/icons-material/Add';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { Skeleton } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -10,15 +17,31 @@ import Paper from '@mui/material/Paper';
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 import _ from 'lodash';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import SignInAlert from './SignInAlert';
 
 const Product = ({ product }: IProps) => {
-    const cartData = useAppSelector((state) => state.cart.cartData);
+    const { cartData, favoriteProducts } = useAppSelector(
+        (state) => state.cart
+    );
     const dispatch = useDispatch();
+    const { status } = useSession();
 
     const [isImageLoading, setIsImageLoading] = useState(true);
+    const [isSignInAlertOpen, setIsSignInAlertOpen] = useState(false);
+    const [cleanSignInAlertContent, setCleanSignInAlertContent] =
+        useState(false);
+
+    const handleCloseSignInAlert = () => {
+        setIsSignInAlertOpen(false);
+    };
+
+    const handleOpenSignInAlert = () => {
+        setIsSignInAlertOpen(true);
+    };
 
     useEffect(() => {
         const loadImage = setTimeout(() => {
@@ -29,159 +52,157 @@ const Product = ({ product }: IProps) => {
     }, []);
 
     return (
-        <Paper
-            elevation={0}
-            variant="outlined"
-            sx={{
-                padding: '1rem',
-                display: 'flex',
-                justifyContent: 'center',
-                flexDirection: 'column',
-                cursor: 'pointer',
-                minHeight: '266px',
-                minWidth: '337px',
-            }}
-        >
-            <Box
+        <Fragment>
+            <Paper
+                elevation={0}
+                variant="outlined"
+                className="p-4 flex justify-center flex-col select-none"
                 sx={{
-                    position: 'relative',
-                    height: '10rem',
+                    minHeight: '266px',
+                    minWidth: '337px',
                 }}
             >
-                <Image
-                    priority
-                    fill
-                    src={product.url}
-                    alt={product.name}
-                    sizes="350px"
-                    style={{
-                        objectFit: 'contain',
-                        display: isImageLoading ? 'none' : 'block',
-                    }}
-                />
-
-                <Skeleton
-                    variant="rounded"
-                    width={'100%'}
-                    height={'100%'}
-                    sx={{
-                        display: isImageLoading ? 'block' : 'none',
-                        marginX: 'auto',
-                    }}
-                />
-            </Box>
-
-            <Typography
-                className="product-title"
-                sx={{
-                    marginTop: '1rem',
-                    marginBottom: '0.5rem',
-                    minHeight: '3rem',
-                }}
-            >
-                {product.name}
-            </Typography>
-            <Typography variant="body2">by {product.seller}</Typography>
-
-            <Box
-                sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                }}
-            >
-                <Box
-                    sx={{
-                        flex: 1,
-                    }}
-                >
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '5px',
+                <Box className="relative h-40">
+                    <Image
+                        priority
+                        fill
+                        src={product.url}
+                        alt={product.name}
+                        sizes="350px"
+                        style={{
+                            objectFit: 'contain',
+                            display: isImageLoading ? 'none' : 'block',
                         }}
-                    >
-                        <Rating
-                            name="product-rating"
-                            value={product.ratings}
-                            precision={0.5}
-                            readOnly
-                        />
+                    />
 
-                        <Typography
-                            sx={{
-                                fontSize: '0.8rem',
-                            }}
-                        >
-                            {product.totalRatings}
-                        </Typography>
-                    </Box>
-
-                    <Typography>₹{product.price}</Typography>
+                    <Skeleton
+                        variant="rounded"
+                        width={'100%'}
+                        height={'100%'}
+                        sx={{
+                            display: isImageLoading ? 'block' : 'none',
+                            marginX: 'auto',
+                        }}
+                    />
                 </Box>
 
-                <Box
-                    sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.5rem',
-                    }}
-                >
-                    <IconButton
-                        aria-label="removeFromCart"
-                        className={
-                            _.get(cartData[product._id], 'quantity', 0) === 0
-                                ? 'disabled-cart-manipulation-button'
-                                : 'cart-manipulation-button'
-                        }
-                        disabled={
-                            _.get(cartData[product._id], 'quantity', 0) === 0
-                        }
-                        onClick={() => {
-                            dispatch(
-                                removeFromCart({
-                                    _id: product._id,
-                                })
-                            );
-                        }}
-                    >
-                        <RemoveIcon />
-                    </IconButton>
-
+                <Box className="flex items-start mt-4 mb-2 gap-3">
                     <Typography
+                        className="product-title flex-1"
                         sx={{
-                            cursor: 'text',
-                            userSelect: 'none',
+                            minHeight: '3rem',
                         }}
                     >
-                        {_.get(cartData[product._id], 'quantity', 0)}
+                        {product.name}
                     </Typography>
 
-                    <IconButton
-                        aria-label="addToCart"
-                        className={
-                            _.get(cartData[product._id], 'quantity', 0) ===
-                            product.quantity
-                                ? 'disabled-cart-manipulation-button'
-                                : 'cart-manipulation-button'
-                        }
-                        disabled={
-                            _.get(cartData[product._id], 'quantity', 0) ===
-                            product.quantity
-                        }
+                    <Box
+                        className="cursor-pointer flex justify-center items-center"
                         onClick={() => {
-                            dispatch(
-                                addToCart({
-                                    ...product,
-                                })
-                            );
+                            if (status === 'unauthenticated') {
+                                handleOpenSignInAlert();
+                            } else {
+                                dispatch(
+                                    toggleFavorite({
+                                        _id: product._id,
+                                    })
+                                );
+                            }
                         }}
                     >
-                        <AddIcon />
-                    </IconButton>
+                        {favoriteProducts.includes(product._id) ? (
+                            <FavoriteOutlinedIcon className="text-red-600" />
+                        ) : (
+                            <FavoriteBorderOutlinedIcon />
+                        )}
+                    </Box>
                 </Box>
-            </Box>
-        </Paper>
+                <Typography variant="body2">by {product.seller}</Typography>
+
+                <Box className="flex items-center">
+                    <Box className="flex-1">
+                        <Box className="flex items-center gap-1">
+                            <Rating
+                                name="product-rating"
+                                value={product.ratings}
+                                precision={0.5}
+                                readOnly
+                            />
+
+                            <Typography
+                                sx={{
+                                    fontSize: '0.8rem',
+                                }}
+                            >
+                                {product.totalRatings}
+                            </Typography>
+                        </Box>
+
+                        <Typography>₹{product.price}</Typography>
+                    </Box>
+
+                    <Box className="flex items-center gap-2">
+                        <IconButton
+                            aria-label="removeFromCart"
+                            className={
+                                _.get(cartData[product._id], 'quantity', 0) ===
+                                0
+                                    ? 'disabled-cart-manipulation-button'
+                                    : 'cart-manipulation-button'
+                            }
+                            disabled={
+                                _.get(cartData[product._id], 'quantity', 0) ===
+                                0
+                            }
+                            onClick={() => {
+                                dispatch(
+                                    removeFromCart({
+                                        _id: product._id,
+                                    })
+                                );
+                            }}
+                        >
+                            <RemoveIcon />
+                        </IconButton>
+
+                        <Typography className="cursor-text select-none">
+                            {_.get(cartData[product._id], 'quantity', 0)}
+                        </Typography>
+
+                        <IconButton
+                            aria-label="addToCart"
+                            className={
+                                _.get(cartData[product._id], 'quantity', 0) ===
+                                product.quantity
+                                    ? 'disabled-cart-manipulation-button'
+                                    : 'cart-manipulation-button'
+                            }
+                            disabled={
+                                _.get(cartData[product._id], 'quantity', 0) ===
+                                product.quantity
+                            }
+                            onClick={() => {
+                                dispatch(
+                                    addToCart({
+                                        ...product,
+                                    })
+                                );
+                            }}
+                        >
+                            <AddIcon />
+                        </IconButton>
+                    </Box>
+                </Box>
+            </Paper>
+
+            <Modal
+                handleCloseModal={handleCloseSignInAlert}
+                open={isSignInAlertOpen}
+                setCleanModalContent={setCleanSignInAlertContent}
+            >
+                {cleanSignInAlertContent ? null : <SignInAlert />}
+            </Modal>
+        </Fragment>
     );
 };
 
