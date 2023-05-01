@@ -1,5 +1,3 @@
-import { IProductSchema } from '@/schemas/product.schema';
-
 const Products = [
     {
         _id: '0',
@@ -11,6 +9,8 @@ const Products = [
         seller: 'Harrsh',
         ratings: 3.5,
         totalRatings: 40,
+        description:
+            'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab provident fuga voluptas maxime praesentium? Quis sunt adipisci consequatur alias odio sint magnam et commodi qui! Quod sapiente impedit sed eligendi.',
     },
     {
         _id: '1',

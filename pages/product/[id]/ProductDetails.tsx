@@ -25,8 +25,10 @@ const ProductDetails = ({ product }: IProps) => {
 
             <Box
                 sx={{
-                    maxWidth: '70%',
+                    maxWidth: '30rem',
                     marginX: 'auto',
+                    marginTop: '2rem',
+                    userSelect: 'none',
                 }}
             >
                 <Box className="relative h-40">
@@ -53,10 +55,17 @@ const ProductDetails = ({ product }: IProps) => {
                     />
                 </Box>
 
-                <Box>
-                    <Typography>{product.name}</Typography>
-                    <Typography>{product.description}</Typography>
-                </Box>
+                <Typography className="product-title font-semibold mt-6">
+                    {product.name}
+                </Typography>
+
+                <Typography variant="body2" className="text-gray-500 mt-1">
+                    by {product.seller}
+                </Typography>
+
+                <Typography className="font-light text-justify my-4">
+                    {product.description}
+                </Typography>
             </Box>
         </Fragment>
     );

@@ -14,6 +14,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         for await (let product of Products) {
             const newProduct = new Product({
                 name: product.name,
+                description: product.description,
                 url: product.url,
                 seller: product.seller,
                 price: product.price,

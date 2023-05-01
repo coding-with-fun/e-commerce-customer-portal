@@ -89,7 +89,7 @@ const Product = ({ product }: IProps) => {
                 </Box>
 
                 <Box
-                    className="flex items-start justify-between mt-4 mb-2 gap-3"
+                    className="flex items-start justify-between mt-4 mb-1 gap-3"
                     sx={{
                         minHeight: '3rem',
                     }}
@@ -124,7 +124,9 @@ const Product = ({ product }: IProps) => {
                         )}
                     </Box>
                 </Box>
-                <Typography variant="body2">by {product.seller}</Typography>
+                <Typography variant="body2" className="text-gray-500">
+                    by {product.seller}
+                </Typography>
 
                 <Box className="flex items-center">
                     <Box className="flex-1">
