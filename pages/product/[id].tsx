@@ -1,25 +1,15 @@
+import toast from '@/libs/toast';
 import env from '@/utility/env';
 import { GetServerSideProps } from 'next';
-import { useRouter } from 'next/router';
 import { ProductDetailsResponseType } from '../api/product/detail';
-import toast from '@/libs/toast';
 
 const Product = ({ data: { product, message, success } }: IProps) => {
-    const router = useRouter();
-
-    const { id } = router.query;
-
     if (!success) {
         toast(message);
         return <div>Product not found.</div>;
     }
 
-    return (
-        <div>
-            Product
-            {id}
-        </div>
-    );
+    return <div>{product.name}</div>;
 };
 
 export default Product;
@@ -29,13 +19,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     if (!params) {
         return {
-            props: {
-                data: {
-                    success: false,
-                    message: 'Product ID not defined.',
-                    product: {},
-                },
-            },
+            props: {},
         };
     }
 
