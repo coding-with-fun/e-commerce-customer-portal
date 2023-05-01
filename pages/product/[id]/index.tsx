@@ -1,7 +1,7 @@
 import toast from '@/libs/toast';
+import { ProductDetailsResponseType } from '@/pages/api/product/detail';
 import env from '@/utility/env';
 import { GetServerSideProps } from 'next';
-import { ProductDetailsResponseType } from '../api/product/detail';
 
 const Product = ({ data: { product, message, success } }: IProps) => {
     if (!success) {
