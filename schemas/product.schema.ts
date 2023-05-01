@@ -12,6 +12,9 @@ const productSchema = new Schema<IProductSchema & Document>(
             type: String,
             required: true,
         },
+        description: {
+            type: String,
+        },
         price: {
             type: Number,
             required: true,
@@ -55,6 +58,7 @@ export interface IProductSchema {
     _id: string;
     productID: string;
     name: string;
+    description?: string;
     price: number;
     quantity: number;
     url?: string;
