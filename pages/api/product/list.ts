@@ -1,5 +1,7 @@
-import Products, { IProduct } from '@/data/ProductsData';
+import { IProduct } from '@/data/ProductsData';
+import connectMongo from '@/libs/connectDB';
 import response from '@/libs/response';
+import Product from '@/schemas/product.schema';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export interface ProductListResponseType {
@@ -12,9 +14,13 @@ const handler = async (
     res: NextApiResponse<ProductListResponseType>
 ) => {
     try {
+        await connectMongo();
+
+        const products = await Product.find();
+
         return response(res, {
             message: 'Products fetched successfully.',
-            products: Products,
+            products: products,
         });
     } catch (error) {
         return response(res, null, error);
