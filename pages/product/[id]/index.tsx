@@ -2,11 +2,12 @@ import toast from '@/libs/toast';
 import { ProductDetailsResponseType } from '@/pages/api/product/detail';
 import env from '@/utility/env';
 import { GetServerSideProps } from 'next';
+import ProductNotFound from './ProductNotFound';
 
 const Product = ({ data: { product, message, success } }: IProps) => {
     if (!success) {
         toast(message);
-        return <div>Product not found.</div>;
+        return <ProductNotFound />;
     }
 
     return <div>{product.name}</div>;
