@@ -1,9 +1,9 @@
-import { IProduct } from '@/data/ProductsData';
+import { IProductSchema } from '@/schemas/product.schema';
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
 export interface ICartData {
-    [_id: string]: IProduct;
+    [_id: string]: IProductSchema;
 }
 
 export interface IInitialData {
@@ -21,7 +21,7 @@ const CartSlice = createSlice({
     initialState,
     reducers: {
         addToCart: (state, action) => {
-            const payload = action.payload as IProduct;
+            const payload = action.payload as IProductSchema;
 
             if (state.cartData[payload._id]) {
                 if (state.cartData[payload._id].quantity < payload.quantity) {

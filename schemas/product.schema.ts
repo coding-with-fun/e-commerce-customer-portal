@@ -2,7 +2,7 @@ import mongoose, { type Document, type ObjectId } from 'mongoose';
 
 const { Schema } = mongoose;
 
-const productSchema = new Schema<IProductSchema>(
+const productSchema = new Schema<IProductSchema & Document>(
     {
         productID: {
             type: String,
@@ -51,7 +51,7 @@ const Product =
 
 export default Product;
 
-export interface IProductSchema extends Document {
+export interface IProductSchema {
     _id: string;
     productID: string;
     name: string;

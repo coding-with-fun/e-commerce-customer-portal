@@ -1,10 +1,10 @@
+import ProductsList from '@/components/home/ProductsList';
 import env from '@/utility/env';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { Fragment } from 'react';
 import { ProductListResponseType } from './api/product/list';
-import ProductsList from '@/components/home/ProductsList';
 
 const Home = ({ products: { products } }: IProps) => {
     return (

@@ -1,11 +1,11 @@
 import Modal from '@/HOC/Modal';
-import { IProduct } from '@/data/ProductsData';
 import { useAppSelector } from '@/hooks/redux';
 import {
     addToCart,
     removeFromCart,
     toggleFavorite,
 } from '@/redux/slice/cart.slice';
+import { IProductSchema } from '@/schemas/product.schema';
 import AddIcon from '@mui/icons-material/Add';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
@@ -19,6 +19,7 @@ import Typography from '@mui/material/Typography';
 import _ from 'lodash';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { Fragment, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import SignInAlert from './SignInAlert';
@@ -29,6 +30,7 @@ const Product = ({ product }: IProps) => {
     );
     const dispatch = useDispatch();
     const { status } = useSession();
+    const router = useRouter();
 
     const [isImageLoading, setIsImageLoading] = useState(true);
     const [isSignInAlertOpen, setIsSignInAlertOpen] = useState(false);
@@ -66,7 +68,7 @@ const Product = ({ product }: IProps) => {
                     <Image
                         priority
                         fill
-                        src={product.url}
+                        src={product.url || ''}
                         alt={product.name}
                         sizes="350px"
                         style={{
@@ -92,7 +94,12 @@ const Product = ({ product }: IProps) => {
                         minHeight: '3rem',
                     }}
                 >
-                    <Typography className="product-title font-semibold cursor-pointer hover:underline">
+                    <Typography
+                        className="product-title font-semibold cursor-pointer hover:underline"
+                        onClick={() => {
+                            router.push(`/product/${product._id}`);
+                        }}
+                    >
                         {product.name}
                     </Typography>
 
@@ -209,5 +216,5 @@ const Product = ({ product }: IProps) => {
 export default Product;
 
 interface IProps {
-    product: IProduct;
+    product: IProductSchema;
 }

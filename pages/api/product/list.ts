@@ -1,11 +1,10 @@
-import { IProduct } from '@/data/ProductsData';
 import connectMongo from '@/libs/connectDB';
 import response from '@/libs/response';
-import Product from '@/schemas/product.schema';
+import Product, { IProductSchema } from '@/schemas/product.schema';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export interface ProductListResponseType {
-    products: IProduct[];
+    products: IProductSchema[];
     [key: string]: any;
 }
 

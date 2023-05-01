@@ -1,4 +1,4 @@
-import { IProduct } from '@/data/ProductsData';
+import { IProductSchema } from '@/schemas/product.schema';
 import Box from '@mui/material/Box';
 import Product from './Product';
 
@@ -24,5 +24,5 @@ const ProductsList = ({ products }: IProps) => {
 export default ProductsList;
 
 interface IProps {
-    products: IProduct[];
+    products: IProductSchema[];
 }
