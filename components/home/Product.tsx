@@ -1,4 +1,6 @@
 import { IProduct } from '@/data/ProductsData';
+import { useAppSelector } from '@/hooks/redux';
+import { addToCart, removeFromCart } from '@/redux/slice/cart.slice';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { Skeleton } from '@mui/material';
@@ -7,10 +9,15 @@ import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
+import _ from 'lodash';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 const Product = ({ product }: IProps) => {
+    const cartData = useAppSelector((state) => state.cart.cartData);
+    const dispatch = useDispatch();
+
     const [isImageLoading, setIsImageLoading] = useState(true);
 
     useEffect(() => {
@@ -120,7 +127,24 @@ const Product = ({ product }: IProps) => {
                         gap: '0.5rem',
                     }}
                 >
-                    <IconButton aria-label="removeFromCart">
+                    <IconButton
+                        aria-label="removeFromCart"
+                        className={
+                            _.get(cartData[product._id], 'quantity', 0) === 0
+                                ? 'disabled-cart-manipulation-button'
+                                : 'cart-manipulation-button'
+                        }
+                        disabled={
+                            _.get(cartData[product._id], 'quantity', 0) === 0
+                        }
+                        onClick={() => {
+                            dispatch(
+                                removeFromCart({
+                                    _id: product._id,
+                                })
+                            );
+                        }}
+                    >
                         <RemoveIcon />
                     </IconButton>
 
@@ -130,10 +154,29 @@ const Product = ({ product }: IProps) => {
                             userSelect: 'none',
                         }}
                     >
-                        0
+                        {_.get(cartData[product._id], 'quantity', 0)}
                     </Typography>
 
-                    <IconButton aria-label="addToCart">
+                    <IconButton
+                        aria-label="addToCart"
+                        className={
+                            _.get(cartData[product._id], 'quantity', 0) ===
+                            product.quantity
+                                ? 'disabled-cart-manipulation-button'
+                                : 'cart-manipulation-button'
+                        }
+                        disabled={
+                            _.get(cartData[product._id], 'quantity', 0) ===
+                            product.quantity
+                        }
+                        onClick={() => {
+                            dispatch(
+                                addToCart({
+                                    ...product,
+                                })
+                            );
+                        }}
+                    >
                         <AddIcon />
                     </IconButton>
                 </Box>

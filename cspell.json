@@ -7,7 +7,9 @@
         "formik",
         "inputerror",
         "nextauth",
+        "persistor",
         "pexels",
+        "reduxjs",
         "tailwindcss"
     ],
     "ignoreWords": [],

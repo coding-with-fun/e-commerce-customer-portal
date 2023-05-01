@@ -24,3 +24,8 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+
+.disabled-cart-manipulation-button {
+    pointer-events: inherit !important;
+    cursor: not-allowed !important;
+}
