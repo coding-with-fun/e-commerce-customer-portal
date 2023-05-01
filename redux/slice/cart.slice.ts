@@ -70,11 +70,20 @@ const CartSlice = createSlice({
                 state.favoriteProducts.splice(index, 1);
             }
         },
+
+        emptyFavorites: (state) => {
+            state.favoriteProducts = [];
+        },
     },
 });
 
-export const { addToCart, removeFromCart, updateCart, toggleFavorite } =
-    CartSlice.actions;
+export const {
+    addToCart,
+    removeFromCart,
+    updateCart,
+    toggleFavorite,
+    emptyFavorites,
+} = CartSlice.actions;
 
 export const cart = (state: RootState): IInitialData => state.cart;
 

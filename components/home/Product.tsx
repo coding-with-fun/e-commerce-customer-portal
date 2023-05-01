@@ -86,13 +86,13 @@ const Product = ({ product }: IProps) => {
                     />
                 </Box>
 
-                <Box className="flex items-start mt-4 mb-2 gap-3">
-                    <Typography
-                        className="product-title flex-1"
-                        sx={{
-                            minHeight: '3rem',
-                        }}
-                    >
+                <Box
+                    className="flex items-start justify-between mt-4 mb-2 gap-3"
+                    sx={{
+                        minHeight: '3rem',
+                    }}
+                >
+                    <Typography className="product-title font-semibold cursor-pointer hover:underline">
                         {product.name}
                     </Typography>
 

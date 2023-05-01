@@ -1,9 +1,12 @@
+import { emptyFavorites } from '@/redux/slice/cart.slice';
 import { Box, Typography } from '@mui/material';
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
+import { useDispatch } from 'react-redux';
 
 const Navbar = () => {
     const { status } = useSession();
+    const dispatch = useDispatch();
 
     return (
         <Box className="flex items-center p-4 shadow fixed top-0 w-screen z-50 bg-white">
@@ -29,6 +32,7 @@ const Navbar = () => {
                         className="cursor-pointer"
                         onClick={() => {
                             signOut();
+                            dispatch(emptyFavorites());
                         }}
                     >
                         Sign Out
