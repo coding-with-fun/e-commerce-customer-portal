@@ -31,9 +31,10 @@
 }
 
 .cart-badge span {
-    color: #ffffff;
-    background-color: #002884;
+    color: #1976d2;
+    background-color: #ffffff;
     height: 20px;
     width: 20px;
     border-radius: 50%;
+    cursor: pointer;
 }
