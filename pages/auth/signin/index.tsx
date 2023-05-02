@@ -5,19 +5,21 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useFormik } from 'formik';
-import { signIn } from 'next-auth/react';
+import { signIn, SignInResponse } from 'next-auth/react';
 import Head from 'next/head';
 import { Fragment, useState } from 'react';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 
-import schema from './schema';
-import { useRouter } from 'next/router';
 import unauthenticatedPage from '@/hooks/unauthenticatedPage';
+import toast from '@/libs/toast';
+import { useRouter } from 'next/router';
+import schema from './schema';
 import env from '@/utility/env';
 
 const SignIn = () => {
     const {
         query: { callbackUrl },
+        push,
     } = useRouter();
 
     const [isDataSubmitting, setIsDataSubmitting] = useState(false);
@@ -30,11 +32,17 @@ const SignIn = () => {
         validationSchema: toFormikValidationSchema(schema),
         onSubmit: async (values) => {
             setIsDataSubmitting(true);
-            await signIn('credentials', {
+            const response = (await signIn('credentials', {
                 email: values.email,
                 password: values.password,
-                callbackUrl: (callbackUrl as string) || env.baseURL,
-            });
+                redirect: false,
+            })) as SignInResponse;
+            console.log(response);
+
+            if (!response.ok) {
+                toast(response.error || 'Something went wrong.');
+                setIsDataSubmitting(false);
+            }
         },
     });
 

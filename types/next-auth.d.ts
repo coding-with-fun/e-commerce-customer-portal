@@ -6,7 +6,12 @@ declare module 'next-auth' {
      */
     interface Session {
         user: {
-            id: string;
-        } & DefaultSession['user'];
+            _id: string;
+            url: string;
+            contactNumber: string;
+            customerID: string;
+            name: string;
+            email: string;
+        };
     }
 }

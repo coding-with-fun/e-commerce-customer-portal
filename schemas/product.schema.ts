@@ -42,6 +42,12 @@ const productSchema = new Schema<IProductSchema & Document>(
             required: true,
             default: 0,
         },
+        favoriteBy: [
+            {
+                type: mongoose.Types.ObjectId,
+                ref: 'Customer',
+            },
+        ],
     },
     {
         timestamps: true,
@@ -65,6 +71,10 @@ export interface IProductSchema {
     seller: string;
     ratings: number;
     totalRatings: number;
+    favoriteBy: {
+        type: typeof mongoose.Types.ObjectId;
+        ref: string;
+    }[];
     createdAt: Date;
     updatedAt: Date;
 }

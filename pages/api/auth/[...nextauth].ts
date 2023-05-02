@@ -1,4 +1,7 @@
+import connectMongo from '@/libs/connectDB';
+import Customer, { CustomerDataType } from '@/schemas/customer.schema';
 import env from '@/utility/env';
+import _ from 'lodash';
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
@@ -8,12 +11,26 @@ export const authOptions: NextAuthOptions = {
             name: 'Credentials',
             credentials: {},
             authorize: async (credentials) => {
-                await new Promise((r) => setTimeout(r, 3000));
+                const email = _.get(credentials, 'email');
+                if (!email) {
+                    throw new Error('Email not found.');
+                }
+
+                await connectMongo();
+                const customer = (await Customer.findOne({
+                    email,
+                })) as CustomerDataType;
+                if (!customer) {
+                    throw new Error('Customer not found.');
+                }
+                const customerObject = customer.toObject();
+                console.log({
+                    ...customerObject,
+                });
 
                 return {
-                    email: 'dev@harrsh.com',
-                    name: 'Harrsh Patel',
-                    id: '11',
+                    id: customerObject._id,
+                    ...customerObject,
                 };
             },
         }),
@@ -47,10 +64,13 @@ export const authOptions: NextAuthOptions = {
             return {
                 ...session,
                 user: {
-                    // ...token,
-                    email: token.email,
-                    id: token.id,
+                    ...session.user,
+                    _id: token._id,
+                    url: token.url,
+                    contactNumber: token.contactNumber,
+                    customerID: token.customerID,
                     name: token.name,
+                    email: token.email,
                 },
             };
         },

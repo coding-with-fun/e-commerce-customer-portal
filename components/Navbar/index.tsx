@@ -159,22 +159,22 @@ const Navbar = () => {
                             flexGrow: 0,
                         }}
                     >
-                        <Tooltip title="Open settings">
-                            <IconButton
-                                onClick={handleOpenUserMenu}
-                                sx={{
-                                    p: 0,
-                                    ...(status === 'unauthenticated' && {
-                                        display: 'none',
-                                    }),
-                                }}
-                            >
-                                <Avatar
-                                    alt={session?.user.name ?? ''}
-                                    src={session?.user.image ?? ''}
-                                />
-                            </IconButton>
-                        </Tooltip>
+                        {['unauthenticated', 'loading'].includes(status) ||
+                        !session ? null : (
+                            <Tooltip title="Open settings">
+                                <IconButton
+                                    onClick={handleOpenUserMenu}
+                                    sx={{
+                                        p: 0,
+                                    }}
+                                >
+                                    <Avatar
+                                        alt={session.user.name ?? ''}
+                                        src={session.user.url ?? ''}
+                                    />
+                                </IconButton>
+                            </Tooltip>
+                        )}
 
                         <Menu
                             sx={{
