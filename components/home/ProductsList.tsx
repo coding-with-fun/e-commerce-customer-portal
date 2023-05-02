@@ -12,6 +12,7 @@ const ProductsList = ({ products }: IProps) => {
                 gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
                 gap: '1rem',
                 marginX: 'auto',
+                paddingBottom: '1rem',
             }}
         >
             {products.map((product) => {

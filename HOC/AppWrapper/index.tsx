@@ -51,7 +51,7 @@ const AppWrapper = ({ children }: IProps) => {
         return <PageLoader />;
     }
 
-    return <Box className="min-h-screen">{children}</Box>;
+    return <Box className="h-screen">{children}</Box>;
 };
 
 export default AppWrapper;
@@ -62,7 +62,7 @@ interface IProps {
 
 export const PageLoader = () => {
     return (
-        <Box className="min-h-screen flex justify-center items-center">
+        <Box className="h-screen flex justify-center items-center">
             <CircularProgress />
         </Box>
     );
