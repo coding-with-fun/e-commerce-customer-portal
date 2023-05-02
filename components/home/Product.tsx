@@ -22,7 +22,9 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Fragment, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import useSWRMutation from 'swr/mutation';
 import SignInAlert from './SignInAlert';
+import { toggleFavoriteAPI } from './api';
 
 const Product = ({ product }: IProps) => {
     const { cartData, favoriteProducts } = useAppSelector(
@@ -31,6 +33,11 @@ const Product = ({ product }: IProps) => {
     const dispatch = useDispatch();
     const { status } = useSession();
     const router = useRouter();
+
+    const { trigger } = useSWRMutation(
+        '/api/product/favorite',
+        toggleFavoriteAPI
+    );
 
     const [isImageLoading, setIsImageLoading] = useState(true);
     const [isSignInAlertOpen, setIsSignInAlertOpen] = useState(false);
@@ -43,6 +50,19 @@ const Product = ({ product }: IProps) => {
 
     const handleOpenSignInAlert = () => {
         setIsSignInAlertOpen(true);
+    };
+
+    const handleToggleFavorite = async () => {
+        const response = await trigger({
+            id: product._id,
+        });
+        console.log(response);
+
+        dispatch(
+            toggleFavorite({
+                _id: product._id,
+            })
+        );
     };
 
     useEffect(() => {
@@ -109,11 +129,7 @@ const Product = ({ product }: IProps) => {
                             if (status === 'unauthenticated') {
                                 handleOpenSignInAlert();
                             } else {
-                                dispatch(
-                                    toggleFavorite({
-                                        _id: product._id,
-                                    })
-                                );
+                                handleToggleFavorite();
                             }
                         }}
                     >

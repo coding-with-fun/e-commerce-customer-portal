@@ -5,6 +5,8 @@ import Product, { IProductSchema } from '@/schemas/product.schema';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import mongoose from 'mongoose';
 import requestValidator from '@/middlewares/requestValidator';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../auth/[...nextauth]';
 
 export interface ProductDetailsResponseType {
     product: IProductSchema;
@@ -20,20 +22,23 @@ const handler = async (
     try {
         const parsedData = (await requestValidator(req, schema)) as schemaType;
         const {
-            query: { id },
+            body: { id },
         } = parsedData;
+
+        const session = await getServerSession(req, res, authOptions);
+        if (!session) {
+            throw new Error('You are not authenticated.');
+        }
 
         await connectMongo();
 
-        const product = await Product.findById(id);
-        if (!product) {
-            throw new Error('Product not found.');
-        }
-        console.log(product);
+        const products = await Product.find({
+            _id: id,
+        }).populate('favoriteBy');
 
         return response(res, {
             message: 'Product fetched successfully.',
-            product,
+            products,
         });
     } catch (error) {
         return response(res, null, error);
@@ -43,7 +48,7 @@ const handler = async (
 export default handler;
 
 const schema = z.object({
-    query: z
+    body: z
         .object({
             id: z
                 .string({
