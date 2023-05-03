@@ -7,6 +7,7 @@ import mongoose from 'mongoose';
 import requestValidator from '@/middlewares/requestValidator';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]';
+import Customer from '@/schemas/customer.schema';
 
 export interface ProductDetailsResponseType {
     product: IProductSchema;
@@ -34,12 +35,46 @@ const handler = async (
 
         const products = await Product.find({
             _id: id,
-        }).populate('favoriteBy');
+            favoriteBy: {
+                $in: session.user._id,
+            },
+        }).populate(['favoriteBy']);
 
-        return response(res, {
-            message: 'Product fetched successfully.',
-            products,
-        });
+        if (products.length > 0) {
+            await Promise.all([
+                Product.findByIdAndUpdate(id, {
+                    $pull: {
+                        favoriteBy: session.user._id,
+                    },
+                }),
+                Customer.findByIdAndUpdate(session.user._id, {
+                    $pull: {
+                        favoriteProducts: id,
+                    },
+                }),
+            ]);
+
+            return response(res, {
+                message: 'Product disliked successfully.',
+            });
+        } else {
+            await Promise.all([
+                Product.findByIdAndUpdate(id, {
+                    $push: {
+                        favoriteBy: session.user._id,
+                    },
+                }),
+                Customer.findByIdAndUpdate(session.user._id, {
+                    $push: {
+                        favoriteProducts: id,
+                    },
+                }),
+            ]);
+
+            return response(res, {
+                message: 'Product liked successfully.',
+            });
+        }
     } catch (error) {
         return response(res, null, error);
     }

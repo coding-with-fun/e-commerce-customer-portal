@@ -56,7 +56,7 @@ const Product = ({ product }: IProps) => {
         const response = await trigger({
             id: product._id,
         });
-        console.log(response);
+        console.log(response ? response.data : response);
 
         dispatch(
             toggleFavorite({
@@ -133,7 +133,7 @@ const Product = ({ product }: IProps) => {
                             }
                         }}
                     >
-                        {favoriteProducts.includes(product._id) ? (
+                        {product.isFavorite ? (
                             <FavoriteOutlinedIcon className="text-red-600" />
                         ) : (
                             <FavoriteBorderOutlinedIcon />
@@ -234,5 +234,7 @@ const Product = ({ product }: IProps) => {
 export default Product;
 
 interface IProps {
-    product: IProductSchema;
+    product: {
+        isFavorite: boolean;
+    } & IProductSchema;
 }

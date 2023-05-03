@@ -5,8 +5,12 @@ import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { Fragment } from 'react';
 import { ProductListResponseType } from './api/product/list';
+import { authOptions } from './api/auth/[...nextauth]';
+import { getServerSession } from 'next-auth';
 
 const Home = ({ data: { products } }: IProps) => {
+    console.log(products);
+
     return (
         <Fragment>
             <Head>
@@ -22,9 +26,24 @@ const Home = ({ data: { products } }: IProps) => {
 
 export default Home;
 
-export const getServerSideProps: GetServerSideProps = async () => {
-    const response = await fetch(`${env.baseURL}/api/product/list`);
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const session = await getServerSession(
+        context.req,
+        context.res,
+        authOptions
+    );
+
+    let customerID = '';
+    if (session) {
+        customerID = session.user._id;
+    }
+
+    const response = await fetch(
+        `${env.baseURL}/api/product/list?customerID=${customerID}`
+    );
     const data: ProductListResponseType = await response.json();
+
+    console.log(data, ' <<< PRODUCTS');
 
     return {
         props: {
